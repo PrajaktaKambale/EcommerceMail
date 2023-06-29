@@ -8,7 +8,7 @@ const config = require("../config");
 const router = express.Router();
 
 router.get("/user/profile", (request, response) => {
-  const statement = `select id,firstName,lastName,email,phone from user where id='${request.userId}'`;
+  const statement = `select firstName,lastName,email,phone from user where id='${request.id}'`;
   db.execute(statement, (error, data) => {
     const result = {
       status: "",
