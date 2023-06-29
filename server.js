@@ -5,6 +5,7 @@ const config = require("./config");
 
 //list of routers
 const routerUser = require("./routes/user");
+const routerCategory = require("./routes/category");
 
 const app = express();
 app.use(bodyParser.json());
@@ -40,6 +41,7 @@ app.use((request, response, next) => {
 });
 //add routers
 app.use(routerUser);
+app.use(routerCategory);
 
 app.get("/", (request, response) => {
   response.send("welcome to ecommerceMail application");

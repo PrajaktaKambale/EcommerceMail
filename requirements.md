@@ -1,4 +1,4 @@
-####User
+#### User
 
 -signup
 -signin
@@ -7,20 +7,27 @@
 -reset password
 -profile
 
-####Products
+#### Products
+
 -create
 -get
 -search
 -edit
 -delete
 
-####Categories
+#### security
+
+-JWT
+
+#### Categories
+
 -create
 -get
 -edit
 -delete
 
-####Companies
+#### Companies
+
 -create
 -get
 -edit

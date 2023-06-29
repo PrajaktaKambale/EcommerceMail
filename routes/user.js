@@ -4,23 +4,14 @@ const crypto = require("crypto-js");
 const mailer = require("../mailer");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const utils = require("../utils");
 
 const router = express.Router();
 
 router.get("/user/profile", (request, response) => {
   const statement = `select firstName,lastName,email,phone from user where id='${request.id}'`;
   db.execute(statement, (error, data) => {
-    const result = {
-      status: "",
-    };
-    if (error) {
-      result["status"] = "error";
-      result["error"] = error;
-    } else {
-      result["status"] = "success";
-      result["data"] = data;
-    }
-    response.send(result);
+    response.send(utils.createResult(error, data));
   });
 });
 
@@ -38,22 +29,9 @@ router.post("/user/signup", (request, response) => {
 
   db.execute(statement, (error, data) => {
     //result
-    const result = {
-      status: "",
-    };
+    const result = utils.createResult(error, data);
 
-    if (error != null) {
-      //if error present
-      // console.log(`error:${error}`);
-      // response.send("error");
-      result["status"] = "error";
-      result["error"] = error;
-    } else {
-      //there is no error
-      // console.log(data);
-      // response.send("okay");
-      result["status"] = "success";
-      result["data"] = data;
+    if (!error) {
       mailer.sendEmail(
         "signup.html",
         "welcome to EcommerceMail application",
@@ -62,6 +40,8 @@ router.post("/user/signup", (request, response) => {
           response.send(result);
         }
       );
+    } else {
+      response.send(result);
     }
   });
 });
