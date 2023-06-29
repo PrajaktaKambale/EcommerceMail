@@ -8,36 +8,20 @@ const config = require("../config");
 const router = express.Router();
 
 router.get("/user/profile", (request, response) => {
-  //get the token sent by client
-  const token = request.headers["token"];
-
-  try {
-    //verify if the token is original or intact
-    const payload = jwt.verify(token, config.secret);
-
-    //if the token is valid grab user id
-    const id = payload["id"];
-
-    const statement = `select id,firstName,lastName,email,phone from user where id=${id}`;
-    db.execute(statement, (error, data) => {
-      const result = {
-        status: "",
-      };
-      if (error) {
-        result["status"] = "error";
-        result["error"] = error;
-      } else {
-        result["status"] = "success";
-        result["data"] = data;
-      }
-      response.send(result);
-    });
-  } catch (e) {
-    response.send({
-      status: "error",
-      error: "Unauthorized Access",
-    });
-  }
+  const statement = `select id,firstName,lastName,email,phone from user where id='${request.userId}'`;
+  db.execute(statement, (error, data) => {
+    const result = {
+      status: "",
+    };
+    if (error) {
+      result["status"] = "error";
+      result["error"] = error;
+    } else {
+      result["status"] = "success";
+      result["data"] = data;
+    }
+    response.send(result);
+  });
 });
 
 router.post("/user/signup", (request, response) => {
