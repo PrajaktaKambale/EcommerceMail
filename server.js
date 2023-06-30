@@ -2,19 +2,32 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const config = require("./config");
+const cors = require("cors");
 
 //list of routers
 const routerUser = require("./routes/user");
 const routerCategory = require("./routes/category");
+const routerCompany = require("./routes/company");
+const routerProduct = require("./routes/product");
 
 const app = express();
+
+//enable frontend application to call the APIs
+app.use(cors("*"));
+
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use((request, response, next) => {
   //skip cheking the token for following APIs
   //signin and signup
   // console.log(`url:${request.url}`);
-  if (request.url == "/user/signin" || request.url == "/user/signup") {
+  if (
+    request.url == "/user/signin" ||
+    request.url == "/user/signup" ||
+    request.url.startsWith("/user/verify") ||
+    request.url.startsWith("/user/status")
+  ) {
     //skip cheking the token
     next();
   } else {
@@ -42,6 +55,8 @@ app.use((request, response, next) => {
 //add routers
 app.use(routerUser);
 app.use(routerCategory);
+app.use(routerCompany);
+app.use(routerProduct);
 
 app.get("/", (request, response) => {
   response.send("welcome to ecommerceMail application");

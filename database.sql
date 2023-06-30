@@ -17,3 +17,12 @@ description varchar(1000));
 
 
 alter table user add unique(email);
+
+alter table user add column isActive int(1);
+alter table user drop column isActive;
+alter table user add column status varchar(20);
+
+//status
+//0 => non-verified
+//1 => active
+//2 => suspended
