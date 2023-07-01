@@ -26,3 +26,16 @@ alter table user add column status varchar(20);
 //0 => non-verified
 //1 => active
 //2 => suspended
+
+create table cart(id int primary key auto_increment,user int,product int,quantity int);
+ alter table cart drop column price;
+
+
+ --order master
+ --status
+ --0:placed,1:packaging,2:dispatched,3:out for delivery,4:delivered,5:cancelled
+ create table userOrder(id int primary key auto_increment,user int,totalPrice float,paidAmount float,orderDate varchar(50) ,status int);
+
+
+ ---order status
+ create table orderDetails(id int primary key auto_increment,orderId int,product int,price float,quantity int );
