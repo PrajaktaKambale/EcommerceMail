@@ -10,6 +10,7 @@ const routerCategory = require("./routes/category");
 const routerCompany = require("./routes/company");
 const routerProduct = require("./routes/product");
 const routerCart = require("./routes/cart");
+const routerOrder = require("./routes/order");
 const app = express();
 
 //enable frontend application to call the APIs
@@ -58,6 +59,7 @@ app.use(routerCategory);
 app.use(routerCompany);
 app.use(routerProduct);
 app.use(routerCart);
+app.use(routerOrder);
 
 app.get("/", (request, response) => {
   response.send("welcome to ecommerceMail application");
